@@ -1,0 +1,93 @@
+<!Doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial">
+    <title> Glass Website</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+      
+  <main>
+    <section class="glass">
+      <!-- <div class="dashboard"></div> -->
+      <div id="details">
+        <div class="photo">
+          <img id="profilePhoto">
+        </div>
+
+        <div class="info">
+          
+        </div>
+      </div>
+    
+    </section>
+    
+  </main>
+  <div class="circles1"></div>
+  <div class="circles2"></div>
+
+
+  </body>
+</html>
+
+<script>
+const contestants = [
+  {
+    name: 'Nwachukwu Emmanuel Chibuikem',
+    department: 'Genetics and Biotechnology',
+    level: '300',
+    are_you_a_NFCS_member : 'Yes',
+    gender: 'Male',
+    image: "IMG_20230218_160435.jpg"
+  },
+  {
+    name: 'Ameh Peace Amarachi',
+    department: 'Religion',
+    level: '400',
+    are_you_a_NFCS_member: 'No',
+    gender: 'Female',
+    image: "IMG_20230218_160435.jpg"
+  },
+]
+function appendHtml(el, str) {
+  var div = document.createElement('div');
+  div.innerHTML = str;
+  while (div.children.length > 0) {
+    el.appendChild(div.children[0]);
+  }
+}
+
+const myFunction = ()=>{
+  const container = document.querySelector('#details');
+  let name = getParameterByName("contestant")
+  name = name ? name.toLowerCase() : null
+  if(!name) return
+  const details = contestants.filter(contestant=>contestant.name.toLowerCase() === name)[0]
+  const imageBox = document.querySelector("#profilePhoto")
+  const detailsContainer = document.querySelector("#details .info")
+  if(Object.keys(details).length){
+    // console.log(details);
+    // container.innerHTML = details.department
+    imageBox.src= `./images/${details.image}`
+    appendHtml(detailsContainer, `<h1>Name: ${details.name}</h1>`);
+    appendHtml(detailsContainer, `<h2>Department: ${details.department}</h2>`);
+    appendHtml(detailsContainer, `<h2>Level: ${details.level}</h2>`);
+    appendHtml(detailsContainer, `<h2>Are you a registered NFCS member: ${details.are_you_a_NFCS_member}<h2>`)
+
+    appendHtml(detailsContainer, `<h2>Gender: ${details.gender}</h2>`);
+  }
+}
+
+function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+window.addEventListener('load', myFunction);
+</script>
+
